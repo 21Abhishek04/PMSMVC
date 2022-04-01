@@ -7,6 +7,7 @@ namespace PMSMVC.Models
 {
     public class Appointment
     {
+
         public string AppointmentId { get; set; }
         public string PatientId { get; set; }
         public byte? DepartmentId { get; set; }

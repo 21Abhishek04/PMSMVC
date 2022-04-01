@@ -1,0 +1,62 @@
+﻿@model PMSMVC.Models.AdminLogin
+
+@{
+    ViewData["Title"] = "HospitalEmployeeLogin";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Life Care - Medical Center</title>
+
+
+    <link rel="stylesheet" href="~/css/bootstrap.css">
+
+    <link rel="stylesheet" href="~/vendor/owl-carousel/css/owl.carousel.css">
+
+    <link rel="stylesheet" href="~/vendor/animate/animate.css">
+
+    <link rel="stylesheet" href="~/css/theme.css">
+
+</head>
+
+<div class="page-hero bg-image overlay-dark" style="background-image: url(https://www.techzooz.org/wp-content/uploads/2022/02/Need-to-Know-About-Masters-in-Medical-Technology.jpg); " alt="">
+    <br />
+   
+    <div class="row">
+        <div class="container">
+            <h4 style="color:white;"> Admin Login</h4>
+            <br />
+            <div class="col-md-4">
+                <form asp-action="HospitalEmployeeLogin">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label style="color:white;" asp-for="HemployeeName" class="control-label"></label>
+                        <input asp-for="HemployeeName" class="form-control" />
+                        <span asp-validation-for="HemployeeName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label style="color:white;" asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-primary" />
+                    </div>
+                    <label style="color:white;">
+
+                        @ViewData["message"]
+                    </label>
+                </form>
+            </div>
+            <div>
+                <a asp-action="Index" asp-controller="Home">Back To Home</a>
+            </div>
+        </div>
+    </div>
+
+
+    </div>

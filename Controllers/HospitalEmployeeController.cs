@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using PMSMVC.Models;
@@ -18,11 +19,9 @@ namespace PMSMVC.Controllers
     {
         string Baseurl = "http://localhost:61003/";
 
-      
+
         public IActionResult Create()
-        {
-            return View();
-        }
+        { return View(); }
 
         [HttpGet]
         public async Task<ActionResult> Index()
@@ -50,7 +49,37 @@ namespace PMSMVC.Controllers
             }
         }
 
-        
+        public IActionResult HospitalEmployeeDashBoard()
+        { 
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create(Departments departments)
+        {
+            List<Departments> PInfo = new List<Departments>();
+            using (var client = new HttpClient())
+            {
+                //Passing service base url
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient
+                HttpResponseMessage Res = await client.GetAsync("api/Departments");
+                //Checking the response is successful or not which is sent using HttpClient
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+                    //Deserializing the response recieved from web api and storing into the Employee list
+                    PInfo = JsonConvert.DeserializeObject<List<Departments>>(Response);
+                }
+                ViewBag.DepartmentId = new SelectList(PInfo, "DepartmentId", "DepartmentName");
+                return View();
+
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(Doctor doctor)
@@ -77,8 +106,8 @@ namespace PMSMVC.Controllers
                 }
             }
         }
-      
-       [HttpGet]
+
+        [HttpGet]
         public async Task<ActionResult> Edit(string id)
         {
             Doctor PInfo = new Doctor();
@@ -89,44 +118,45 @@ namespace PMSMVC.Controllers
                 //Passing service base url
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
-          
+
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-              
-                HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/" + id);
-               //HttpResponseMessage Res1 = await client.GetAsync("api/HospitalEmploy/" + id);
-              
+
+                HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/GetDoctorById/" + id);
+                //HttpResponseMessage Res1 = await client.GetAsync("api/HospitalEmploy/" + id);
+
 
                 if (Res.IsSuccessStatusCode)
                 {
-                  
+
                     var Response = Res.Content.ReadAsStringAsync().Result;
-                   
+
                     PInfo = JsonConvert.DeserializeObject<Doctor>(Response);
 
                 }
                 return View(PInfo);
             }
-              
+
         }
-        
-       
-       
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> Edit(string id, Doctor doctor)
         {
-        
+          
 
             using (HttpClient client = new HttpClient())
             {
 
-               
+
                 StringContent content = new StringContent(JsonConvert.SerializeObject(doctor), Encoding.UTF8, "application/json");
-                string endpoint = this.Baseurl + "api/HospitalEmp/" + id;
+                string endpoint = this.Baseurl + "api/HospitalEmp/PutDoctor/" + id;
                 using (var Response = await client.PutAsync(endpoint, content))
                 {
+
                     if (Response.IsSuccessStatusCode)
-                        {
+                    {
                         TempData["Doctor"] = JsonConvert.SerializeObject(doctor);
 
                         return RedirectToAction("Index");
@@ -152,7 +182,7 @@ namespace PMSMVC.Controllers
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(doctor), Encoding.UTF8, "application/json");
                 string endpoint = this.Baseurl + "api/HospitalEmp/" + id;
-                using (var Response = await client.PostAsync(endpoint,content))
+                using (var Response = await client.PostAsync(endpoint, content))
                 {
                     if (Response.IsSuccessStatusCode)
                     {
@@ -170,21 +200,58 @@ namespace PMSMVC.Controllers
             }
         }
 
+
+        //For Patients
+
+
+        [HttpGet]
+       
+            public async Task<ActionResult> GetPatients()
+            {
+                List<Patient> PInfo = new List<Patient>();
+                using (var client = new HttpClient())
+                {
+                    //Passing service base url
+                    client.BaseAddress = new Uri(Baseurl);
+                    client.DefaultRequestHeaders.Clear();
+                    //Define request data format
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    //Sending request to find web api REST service resource GetAllEmployees using HttpClient
+                    HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/GetPatient/");
+                    //Checking the response is successful or not which is sent using HttpClient
+                    if (Res.IsSuccessStatusCode)
+                    {
+                        //Storing the response details recieved from web api
+                        var Response = Res.Content.ReadAsStringAsync().Result;
+                        //Deserializing the response recieved from web api and storing into the Employee list
+                        PInfo = JsonConvert.DeserializeObject<List<Patient>>(Response);
+                    }
+                    //returning the employee list to view
+                    return View(PInfo);
+                }
+            }
+
+
+        public IActionResult AddPatient()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> CreatePatient(Patient patient)
+        public async Task<IActionResult> AddPatient(Patient patient)
         {
 
             using (HttpClient client = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(patient), Encoding.UTF8, "application/json");
-                string endpoint = this.Baseurl + "api/HospitalEmp/";
+                string endpoint = this.Baseurl + "api/HospitalEmp/AddPatient/";
                 using (var Response = await client.PostAsync(endpoint, content))
                 {
                     if (Response.IsSuccessStatusCode)
                     {
                         TempData["Patient"] = JsonConvert.SerializeObject(patient);
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("GetPatients");
                     }
                     else
                     {
@@ -196,10 +263,112 @@ namespace PMSMVC.Controllers
             }
         }
 
-    }
+        [HttpGet]
+        public async Task<ActionResult> EditPatient(string id)
+        {
+            Patient PInfo = new Patient();
 
-    }
 
+            using (var client = new HttpClient())
+            {
+                //Passing service base url
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/PatientById/" + id);
+                //HttpResponseMessage Res1 = await client.GetAsync("api/HospitalEmploy/" + id);
+
+
+                if (Res.IsSuccessStatusCode)
+                {
+
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+
+                    PInfo = JsonConvert.DeserializeObject<Patient>(Response);
+
+                }
+                return View(PInfo);
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPatient(string id, Patient patient)
+        {
+
+
+            using (HttpClient client = new HttpClient())
+            {
+
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(patient), Encoding.UTF8, "application/json");
+                string endpoint = this.Baseurl + "api/HospitalEmp/PutPatient/" + id;
+                using (var Response = await client.PutAsync(endpoint, content))
+                {
+
+                    if (Response.IsSuccessStatusCode)
+                    {
+                        TempData["Patient"] = JsonConvert.SerializeObject(patient);
+                        ModelState.Clear();
+                        ModelState.AddModelError(string.Empty, "Updated Successfully");
+                        return RedirectToAction("GetPatients");
+                    }
+                    else
+                    {
+                        ModelState.Clear();
+                        ModelState.AddModelError(string.Empty, "Could not update Patient");
+                        return View();
+                    }
+
+
+                }
+            }
+        }
+
+
+
+        [HttpGet] // and also create a post method
+
+        public IActionResult HospitalEmployeeLogin()
+
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> HospitalEmployeeLogin(AdminLogin adminLogin)
+
+        {
+            using (HttpClient client = new HttpClient())
+
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(adminLogin), Encoding.UTF8, "application/json");
+
+                string endpoint = Baseurl + "api/HospitalEmp/Login";
+
+                using (var Response = await client.PostAsync(endpoint, content))
+
+                {
+                    string token = await Response.Content.ReadAsStringAsync();
+                    if (token == "User not found")
+                    {
+                        ViewBag.Message = "Invalid Credentials"; 
+                        return View();
+
+
+                    }
+                    HttpContext.Session.SetString("Jwtoken", token);
+                }
+               
+                  return Redirect("~/HospitalEmployee/HospitalEmployeeDashBoard");
+            }
+
+        }
+    }
+}
 
 
 

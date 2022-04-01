@@ -22,14 +22,6 @@ namespace PMSMVC.Models
 
         public virtual Departments Department { get; set; }
 
-        internal static object Find(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void Remove(Doctor emp)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
