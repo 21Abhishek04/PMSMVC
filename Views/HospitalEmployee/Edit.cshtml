@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
+<div class="container">
 <h4>Doctor</h4>
 <hr />
 <div class="row">
@@ -29,6 +27,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DepartmentId" class="control-label"></label>
+
                 <input asp-for="DepartmentId" class="form-control" />
                 <span asp-validation-for="DepartmentId" class="text-danger"></span>
             </div>
@@ -55,9 +54,12 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary ml-lg-3" asp-action="HospitalEmployeeDashBoard" asp-controller="HospitalEmployee">Back to DashBoard</a>
+
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+    </div>
+

@@ -20,8 +20,7 @@ namespace PMSMVC.Controllers
         string Baseurl = "http://localhost:61003/";
 
 
-        public IActionResult Create()
-        { return View(); }
+       
 
         [HttpGet]
         public async Task<ActionResult> Index()
@@ -55,7 +54,7 @@ namespace PMSMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(Departments departments)
+        public async Task<IActionResult> Create()
         {
             List<Departments> PInfo = new List<Departments>();
             using (var client = new HttpClient())
@@ -81,6 +80,39 @@ namespace PMSMVC.Controllers
             }
         }
 
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAppointments()
+        {
+            List<Appointment> PInfo = new List<Appointment>();
+            using (var client = new HttpClient())
+            {
+                //Passing service base url
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient
+                HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/GetAppointments");
+                //Checking the response is successful or not which is sent using HttpClient
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response recieved from web api and storing into the Employee list
+                    PInfo = JsonConvert.DeserializeObject<List<Appointment>>(Response);
+                   
+
+                }
+
+                return View(PInfo);
+
+            }
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(Doctor doctor)
         {
@@ -88,7 +120,7 @@ namespace PMSMVC.Controllers
             using (HttpClient client = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(doctor), Encoding.UTF8, "application/json");
-                string endpoint = this.Baseurl + "api/HospitalEmp/";
+                string endpoint = Baseurl + "api/HospitalEmp";
                 using (var Response = await client.PostAsync(endpoint, content))
                 {
                     if (Response.IsSuccessStatusCode)
@@ -110,8 +142,9 @@ namespace PMSMVC.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(string id)
         {
+           
             Doctor PInfo = new Doctor();
-
+          
 
             using (var client = new HttpClient())
             {
@@ -122,6 +155,7 @@ namespace PMSMVC.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/GetDoctorById/" + id);
+                
                 //HttpResponseMessage Res1 = await client.GetAsync("api/HospitalEmploy/" + id);
 
 
@@ -129,10 +163,13 @@ namespace PMSMVC.Controllers
                 {
 
                     var Response = Res.Content.ReadAsStringAsync().Result;
+                   
 
                     PInfo = JsonConvert.DeserializeObject<Doctor>(Response);
+                
 
                 }
+               
                 return View(PInfo);
             }
 
@@ -217,7 +254,7 @@ namespace PMSMVC.Controllers
                     //Define request data format
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     //Sending request to find web api REST service resource GetAllEmployees using HttpClient
-                    HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/GetPatient/");
+                    HttpResponseMessage Res = await client.GetAsync("api/HospitalEmp/GetPatient");
                     //Checking the response is successful or not which is sent using HttpClient
                     if (Res.IsSuccessStatusCode)
                     {
@@ -232,9 +269,35 @@ namespace PMSMVC.Controllers
             }
 
 
-        public IActionResult AddPatient()
+     
+
+        public async Task<IActionResult> AddPatient()
         {
-            return View();
+            List<BloodGroups> PInfo = new List<BloodGroups>();
+            using (var client = new HttpClient())
+            {
+                //Passing service base url
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient
+                HttpResponseMessage Res = await client.GetAsync("api/BloodGroups");
+                //Checking the response is successful or not which is sent using HttpClient
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response recieved from web api and storing into the Employee list
+                    PInfo = JsonConvert.DeserializeObject<List<BloodGroups>>(Response);
+                    ViewBag.BloodGroupId = new SelectList(PInfo, "BloodGroupId", "BloodGroup");
+
+                }
+
+                return View();
+
+            }
         }
 
         [HttpPost]

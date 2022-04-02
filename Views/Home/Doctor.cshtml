@@ -1,0 +1,278 @@
+﻿
+@{
+    ViewData["Title"] = "Doctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="copyright" content="MACode ID, https://macodeid.com/">
+
+
+
+    <link rel="stylesheet" href="~/css/maicons.css">
+    <script src="~/vendor/owl-carousel/js/owl.carousel.js"></script>
+
+    <link rel="stylesheet" href="~/css/bootstrap.css">
+
+
+    <link rel="stylesheet" href="~/vendor/owl-carousel/css/owl.carousel.css">
+
+    <link rel="stylesheet" href="~/vendor/animate/animate.css">
+
+    <link rel="stylesheet" href="~/css/theme.css">
+    <script src="~/vendor/owl-carousel/css/owl.carousel.js"></script>
+    <link href="~/vendor/owl-carousel/css/owl.carousel.css" rel="stylesheet" />
+
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/vendor/owl-carousel/js/owl.carousel.min.js"></script>
+
+    <script src="~/vendor/wow/wow.min.js"></script>
+
+    <script src="~/js/theme.js"></script>
+
+</head>
+<body>
+
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+
+    <header>
+        <div class="topbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 text-sm">
+                        <div class="site-info">
+                            <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
+                            <span class="divider">|</span>
+                            <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 text-right text-sm">
+                        <div class="social-mini-button">
+                            <a href="#"><span class="mai-logo-facebook-f"></span></a>
+                            <a href="#"><span class="mai-logo-twitter"></span></a>
+                            <a href="#"><span class="mai-logo-dribbble"></span></a>
+                            <a href="#"><span class="mai-logo-instagram"></span></a>
+                        </div>
+                    </div>
+                </div> <!-- .row -->
+            </div> <!-- .container -->
+        </div> <!-- .topbar -->
+
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+
+            <div class="collapse navbar-collapse" id="navbarSupport">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Doctor" asp-controller="Home">About Us</a>
+                    </li>
+                    <li cclass="nav-item active">
+                        <a class="nav-link" asp-action="Doctor" asp-controller="Home">Doctors</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Doctor" asp-controller="Home">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Login
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="nav-link" asp-action="HospitalEmployeeLogin" asp-controller="HospitalEmployee">Admins</a>
+                                <a class="nav-link" asp-action="DoctorLogin" asp-controller="Doctor">Doctors</a>
+                                <a class="nav-link" asp-action="PatientLogin" asp-controller="Patient">Patients</a>
+                            </div> <br>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div> <!-- .navbar-collapse -->
+        </nav>
+    </header>
+
+    <div class="page-banner overlay-dark bg-image" style="background-image: url(https://www.techzooz.org/wp-content/uploads/2022/02/Need-to-Know-About-Masters-in-Medical-Technology.jpg); " alt="">
+        <div class="banner-section">
+            <div class="container text-center wow fadeInUp">
+                <nav aria-label="Breadcrumb">
+                    <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Doctors</li>
+                    </ol>
+                </nav>
+                <h1 class="font-weight-normal">Our Doctors</h1>
+            </div> <!-- .container -->
+        </div> <!-- .banner-section -->
+    </div> <!-- .page-banner -->
+
+    <div class="page-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="row">
+
+                        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    <img src="~/img/doctor_1.jpg" alt="">
+                                    <div class="meta">
+                                        <a href="#"><span class="mai-call"></span></a>
+                                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-xl mb-0">Dr. Stein Albert</p>
+                                    <span class="text-sm text-grey">Cardiology</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    <img src="~/img/doctor_2.jpg" alt="">
+                                    <div class="meta">
+                                        <a href="#"><span class="mai-call"></span></a>
+                                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-xl mb-0">Dr. Alexa Melvin</p>
+                                    <span class="text-sm text-grey">Dental</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    <img src="~/img/doctor_3.jpg" alt="">
+                                    <div class="meta">
+                                        <a href="#"><span class="mai-call"></span></a>
+                                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-xl mb-0">Dr. Rebecca Steffany</p>
+                                    <span class="text-sm text-grey">General Health</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    <img src="~/img/doctor_1.jpg" alt="">
+                                    <div class="meta">
+                                        <a href="#"><span class="mai-call"></span></a>
+                                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-xl mb-0">Dr. Stein Albert</p>
+                                    <span class="text-sm text-grey">Cardiology</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    <img src="~/img/doctor_2.jpg" alt="">
+                                    <div class="meta">
+                                        <a href="#"><span class="mai-call"></span></a>
+                                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-xl mb-0">Dr. Alexa Melvin</p>
+                                    <span class="text-sm text-grey">Dental</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    <img src="~/img/doctor_3.jpg" alt="">
+                                    <div class="meta">
+                                        <a href="#"><span class="mai-call"></span></a>
+                                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-xl mb-0">Dr. Rebecca Steffany</p>
+                                    <span class="text-sm text-grey">General Health</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </div> <!-- .page-section -->
+    <footer class="page-footer">
+        <div class="container-fluid ">
+            <div class="container">
+                <div class="row ">
+
+                    <div class="col-sm-6 col-lg-3 py-3">
+                        <h5>More</h5>
+                        <ul class="footer-menu">
+                            <li><a href="#">Terms & Condition</a></li>
+                            <li><a href="#">Privacy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 py-3">
+
+                        <ul class="footer-menu">
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 py-3">
+                        <h5>Contact</h5>
+                        <p class="footer-link mt-2">351 Willow Street Franklin, MA 02038</p>
+                        <a href="#" class="footer-link">701-573-7582</a>
+                        <a href="#" class="footer-link">healthcare@temporary.net</a>
+
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <p id="copyright">Copyright &copy; 2022 <a href="#" target="_blank">PMS</a>. All right reserved</p>
+        </div>
+    </footer>
+
+
+
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/vendor/owl-carousel/js/owl.carousel.min.js"></script>
+
+    <script src="~/vendor/wow/wow.min.js"></script>
+
+    <script src="~/js/theme.js"></script>
+
+</body>
+</html>
+

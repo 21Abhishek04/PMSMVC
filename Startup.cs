@@ -45,7 +45,7 @@ namespace PMSMVC
             app.UseSession();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

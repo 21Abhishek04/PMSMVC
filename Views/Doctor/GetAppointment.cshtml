@@ -1,0 +1,69 @@
+﻿@model IEnumerable<PMSMVC.Models.Appointment>
+
+@{
+    ViewData["Title"] = "GetAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Appointments</h1>
+
+<p>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDate)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultationFees)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+        
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultationFees)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
+
+<br/>
+<li class="nav-item">
+    <a class="btn btn-primary ml-lg-3" asp-action="DoctorDashBoard" asp-controller="Doctor">Dash board</a>
+</li>
