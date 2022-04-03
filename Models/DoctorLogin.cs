@@ -13,13 +13,11 @@ namespace PMSMVC.Models
         [MaxLength(15)]
         [Required(ErrorMessage = "This field is required")]
         [DisplayName("Doctor Name")]
-       
         public string DoctorName { get; set; }
 
         [MaxLength(6)]
         [Required(ErrorMessage = "This field is required")]
         [DisplayName("Doctor Password")]
-      
         public string Password { get; set; }
     }
 }
