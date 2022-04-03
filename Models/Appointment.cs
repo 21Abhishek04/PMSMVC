@@ -31,7 +31,10 @@ namespace PMSMVC.Models
 
         public decimal? ConsultationFees { get; set; }
 
+        [ForeignKey("DepartmentId")]
         public virtual Departments Department { get; set; }
+
+        [ForeignKey("DoctorId")]
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
     }

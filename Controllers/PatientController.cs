@@ -32,37 +32,17 @@ namespace PMSMVC.Controllers
             return View();
         }
 
-        //public async Task<ActionResult> Index()
-        //{
-        //    List<Patient> PInfo = new List<Patient>();
-        //    using (var client = new HttpClient())
-        //    {
-        //        //Passing service base url
-        //        client.BaseAddress = new Uri(Baseurl);
-        //        client.DefaultRequestHeaders.Clear();
-        //        //Define request data format
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        //Sending request to find web api REST service resource GetAllEmployees using HttpClient
-        //        HttpResponseMessage Res = await client.GetAsync("api/Patient");
-        //        //Checking the response is successful or not which is sent using HttpClient
-        //        if (Res.IsSuccessStatusCode)
-        //        {
-        //            //Storing the response details recieved from web api
-        //            var Response = Res.Content.ReadAsStringAsync().Result;
-        //            //Deserializing the response recieved from web api and storing into the Employee list
-        //            PInfo = JsonConvert.DeserializeObject<List<Patient>>(Response);
-        //        }
-        //        //returning the employee list to view
-        //        return View(PInfo);
-        //    }
-        //}
-
+     
        
 
         [HttpGet]
         public async Task<IActionResult> Register()
         {
             List<BloodGroups> PInfo = new List<BloodGroups>();
+            if (HttpContext.Session.GetString("Jwtoken") == null)
+            {
+                return RedirectToAction("PatientLogin", "Patient");
+            }
             using (var client = new HttpClient())
             {
                 //Passing service base url
@@ -70,6 +50,7 @@ namespace PMSMVC.Controllers
                 client.DefaultRequestHeaders.Clear();
                 //Define request data format
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Jwtoken"));
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient
                 HttpResponseMessage Res = await client.GetAsync("api/BloodGroups");
                 //Checking the response is successful or not which is sent using HttpClient
@@ -85,31 +66,7 @@ namespace PMSMVC.Controllers
             }
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> BookAppointment()
-        //{
-        //    List<Doctor> PInfo = new List<Doctor>();
-        //    using (var client = new HttpClient())
-        //    {
-        //        //Passing service base url
-        //        client.BaseAddress = new Uri(Baseurl);
-        //        client.DefaultRequestHeaders.Clear();
-        //        //Define request data format
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        //Sending request to find web api REST service resource GetAllEmployees using HttpClient
-        //        HttpResponseMessage Res = await client.GetAsync("api/Doctor");
-        //        //Checking the response is successful or not which is sent using HttpClient
-        //        if (Res.IsSuccessStatusCode)
-        //        {
-        //            //Storing the response details recieved from web api
-        //            var Response = Res.Content.ReadAsStringAsync().Result;
-        //            //Deserializing the response recieved from web api and storing into the Employee list
-        //            PInfo = JsonConvert.DeserializeObject<List<Doctor>>(Response);
-        //        }
-        //        ViewBag.DoctorId = new SelectList(PInfo, "DoctorId", "DoctorName & DepartmentName");
-        //        return View();
-        //    }
-        //}
+     
 
         [HttpPost]
         public async Task<IActionResult> Register(Patient patient)
@@ -141,12 +98,16 @@ namespace PMSMVC.Controllers
         {
             return View();
         }
-      
+
         [HttpGet]
 
         public async Task<IActionResult> BookAppointment()
-        {   
+        {
             List<Departments> PInfo = new List<Departments>();
+            if (HttpContext.Session.GetString("Jwtoken") == null)
+            {
+                return RedirectToAction("PatientLogin", "Patient");
+            }
             using (var client = new HttpClient())
             {
                 //Passing service base url
@@ -154,6 +115,7 @@ namespace PMSMVC.Controllers
                 client.DefaultRequestHeaders.Clear();
                 //Define request data format
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Jwtoken"));
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient
                 HttpResponseMessage Res = await client.GetAsync("api/Departments");
                 //Checking the response is successful or not which is sent using HttpClient
@@ -174,6 +136,10 @@ namespace PMSMVC.Controllers
         public async Task<IActionResult> GetHistory(string id)
         {
             List<Appointment> PInfo = new List<Appointment>();
+            if (HttpContext.Session.GetString("Jwtoken") == null)
+            {
+                return RedirectToAction("PatientLogin", "Patient");
+            }
             using (var client = new HttpClient())
             {
                 //Passing service base url
@@ -181,6 +147,7 @@ namespace PMSMVC.Controllers
                 client.DefaultRequestHeaders.Clear();
                 //Define request data format
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Jwtoken"));
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient
                 HttpResponseMessage Res = await client.GetAsync("api/Patient/GetHistory/" + id);
                 //Checking the response is successful or not which is sent using HttpClient
@@ -198,17 +165,51 @@ namespace PMSMVC.Controllers
 
 
 
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> GetDoctors()
+        {
+            List<Doctor> PInfo = new List<Doctor>();
+            if (HttpContext.Session.GetString("Jwtoken") == null)
+            {
+                return RedirectToAction("PatientLogin", "Patient");
+            }
+            using (var client = new HttpClient())
+            {
+         
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+               
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Jwtoken"));
+                HttpResponseMessage Res = await client.GetAsync("api/Patient/GetDoctors");
+           
+                if (Res.StatusCode == HttpStatusCode.OK)
+                {
+                  
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+                  
+                    PInfo = JsonConvert.DeserializeObject<List<Doctor>>(Response);
+                }
+               
+                return View(PInfo);
+            }
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> BookAppointment(Appointment appointment)
         {
             using (HttpClient client = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(appointment), Encoding.UTF8, "application/json");
-                string endpoint = Baseurl + "api/Patient/BookAppointment";
-                using (var Response = await client.PostAsync(endpoint, content))
+                string endpoint = Baseurl + "api/Appointments";
+                using (var Res = await client.PostAsync(endpoint, content))
                 {
-                    
-                    if (Response.StatusCode == HttpStatusCode.OK)
+
+                    if (Res.IsSuccessStatusCode)
                     {
                         TempData["Appointment"] = JsonConvert.SerializeObject(appointment);
                         return RedirectToAction("PatientDashBoard");
@@ -224,8 +225,13 @@ namespace PMSMVC.Controllers
 
         }
 
+        public IActionResult PatientLogout()
+        {
+            HttpContext.Session.Remove("Jwtoken");
+            return RedirectToAction("PatientLogin", "Patient");
 
-       
+        }
+
 
         [HttpGet]
         public IActionResult PatientLogin()

@@ -38,6 +38,37 @@ namespace PMSMVC.Controllers
 
         }
 
+       
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> SearchPatient(string Search)
+        {
+            List<Patient> CInfo = new List<Patient>();
+            if (HttpContext.Session.GetString("Jwtoken") == null)
+            {
+                return RedirectToAction("DoctorLogin", "Doctor");
+            }
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Jwtoken"));
+
+                HttpResponseMessage Res = await client.GetAsync("api/Doctor/"+Search);
+              
+                if (Res.IsSuccessStatusCode)
+                {
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+                   
+                    CInfo = JsonConvert.DeserializeObject<List<Patient>>(Response);
+                }
+                return View(CInfo);
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetPatients()
         {
@@ -102,6 +133,7 @@ namespace PMSMVC.Controllers
                 return View(PInfo);
             }
         }
+
 
         [HttpPost]
 

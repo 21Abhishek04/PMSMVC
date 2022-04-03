@@ -45,46 +45,31 @@
 
     <!-- Back to top button -->
     <div class="back-to-top"></div>
-
+    <div class="back-to-top"></div>
     <header>
-        <div class="topbar">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 text-sm">
-                        <div class="site-info">
-                            <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
-                            <span class="divider">|</span>
-                            <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 text-right text-sm">
-                        <div class="social-mini-button">
-                            <a href="#"><span class="mai-logo-facebook-f"></span></a>
-                            <a href="#"><span class="mai-logo-twitter"></span></a>
-                            <a href="#"><span class="mai-logo-dribbble"></span></a>
-                            <a href="#"><span class="mai-logo-instagram"></span></a>
-                        </div>
-                    </div>
-                </div> <!-- .row -->
-            </div> <!-- .container -->
-        </div> <!-- .topbar -->
-
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+
+            <a class="navbar-brand" href="#"><span class="text-primary">Life</span> Care</a>
+
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse" id="navbarSupport">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
+                        <a class="nav-link"   asp-action="Index" asp-controller="Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Doctor" asp-controller="Home">About Us</a>
+                        <a class="nav-link" href="about.html">About Us</a>
                     </li>
-                    <li cclass="nav-item active">
-                        <a class="nav-link" asp-action="Doctor" asp-controller="Home">Doctors</a>
+                    <li class="nav-item active">
+                    <a class="nav-link" asp-action="Doctor" asp-controller="Home">Doctors</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="Doctor" asp-controller="Home">Contact</a>
+                        <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
@@ -102,7 +87,9 @@
 
                 </ul>
             </div> <!-- .navbar-collapse -->
+
         </nav>
+
     </header>
 
     <div class="page-banner overlay-dark bg-image" style="background-image: url(https://www.techzooz.org/wp-content/uploads/2022/02/Need-to-Know-About-Masters-in-Medical-Technology.jpg); " alt="">
@@ -110,7 +97,7 @@
             <div class="container text-center wow fadeInUp">
                 <nav aria-label="Breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a  asp-action="Index" asp-controller="Home"> Back to home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Doctors</li>
                     </ol>
                 </nav>
